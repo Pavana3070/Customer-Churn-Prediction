@@ -24,8 +24,8 @@
             </thead>
             <tbody>
                 {% for model, metrics in results.items() %}
-                <tr style="{{ 'background-color: rgba(16, 185, 129, 0.05); border-left: 4px solid var(--success);' if model == best_model else '' }}">
-                    <td style="font-weight: {{ '600' if model == best_model else '400' }};">
+                <tr class="{{ 'row-best-model' if model == best_model else '' }}">
+                    <td class="{{ 'cell-best-model' if model == best_model else 'cell-normal-model' }}">
                         {{ model }}
                         {% if model == best_model %}
                             <span class="badge badge-success" style="margin-left: 8px;">Best Model</span>

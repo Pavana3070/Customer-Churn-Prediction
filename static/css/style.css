@@ -403,3 +403,14 @@ tr:hover td {
 .prediction-stay h3 { color: var(--success); }
 .prediction-churn { border: 2px solid var(--danger); background-color: rgba(239, 68, 68, 0.05); }
 .prediction-churn h3 { color: var(--danger); }
+
+.row-best-model {
+  background-color: rgba(16, 185, 129, 0.05);
+  border-left: 4px solid var(--success);
+}
+.cell-best-model {
+  font-weight: 600;
+}
+.cell-normal-model {
+  font-weight: 400;
+}
