@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="card-title" style="margin: 0;"><i class="fa-solid fa-chart-pie"></i> Analytics Dashboard</h2>
+    <a href="{{ url_for('predict') }}" class="btn btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Go Predict</a>
+</div>
+
+<div class="d-flex gap-3 mb-4" style="flex-wrap: wrap;">
+    <div class="card" style="flex: 1; min-width: 400px; padding: 1rem;">
+        <div id="accuracyChart"></div>
+    </div>
+    <div class="card" style="flex: 1; min-width: 400px; padding: 1rem;">
+        <div id="targetDistChart"></div>
+    </div>
+</div>
+
+<div class="card mb-4" style="padding: 1rem;">
+    <div id="featureImportanceChart"></div>
+</div>
+
+<div class="card" style="padding: 1rem;">
+    <div id="correlationChart"></div>
+</div>
+<!-- Embed JSON data safely for JS to read -->
+<script id="accuracy-data" type="application/json">{{ accuracy_data | safe }}</script>
+<script id="target-dist-data" type="application/json">{{ target_dist_data | safe }}</script>
+<script id="feature-imp-data" type="application/json">{{ feature_imp_data | safe }}</script>
+<script id="corr-data" type="application/json">{{ corr_data | safe }}</script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Parse JSON data safely passed from Flask
+    const accuracyData = JSON.parse(document.getElementById('accuracy-data').textContent);
+    const targetDistData = JSON.parse(document.getElementById('target-dist-data').textContent);
+    const featureImpData = JSON.parse(document.getElementById('feature-imp-data').textContent);
+    const corrData = JSON.parse(document.getElementById('corr-data').textContent);
+
+    function getChartLayout(title) {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        return {
+            title: title,
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: {
+                color: isDark ? '#f8fafc' : '#1e293b',
+                family: 'Inter, sans-serif'
+            },
+            margin: { t: 40, l: 50, r: 20, b: 50 },
+            xaxis: { gridcolor: isDark ? '#334155' : '#e2e8f0' },
+            yaxis: { gridcolor: isDark ? '#334155' : '#e2e8f0' }
+        };
+    }
+
+    function renderCharts() {
+        // Plotly uses (divId, data, layout)
+        if (Object.keys(accuracyData).length > 0) {
+            Plotly.newPlot('accuracyChart', accuracyData.data, Object.assign({}, accuracyData.layout, getChartLayout('Model Accuracy Comparison')));
+        }
+        if (Object.keys(targetDistData).length > 0) {
+            Plotly.newPlot('targetDistChart', targetDistData.data, Object.assign({}, targetDistData.layout, getChartLayout('Target Class Distribution')));
+        }
+        if (Object.keys(featureImpData).length > 0) {
+            Plotly.newPlot('featureImportanceChart', featureImpData.data, Object.assign({}, featureImpData.layout, getChartLayout('Feature Importance (Random Forest)')));
+        }
+        if (Object.keys(corrData).length > 0) {
+            Plotly.newPlot('correlationChart', corrData.data, Object.assign({}, corrData.layout, getChartLayout('Correlation Heatmap')));
+        }
+    }
+
+    renderCharts();
+
+    window.addEventListener('themeChanged', () => {
+        renderCharts();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="card text-center" style="padding: 4rem 2rem; margin-top: 2rem;">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Auto Churn Predictor</h1>
+    <p style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 3rem;">Upload your dataset and predict customer churn using AI.</p>
+    
+    <div class="d-flex justify-content-center gap-3">
+        <a href="{{ url_for('upload') }}" class="btn btn-primary" style="font-size: 1.2rem; padding: 1rem 2.5rem;">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Upload Dataset
+        </a>
+        <a href="#features" class="btn btn-outline" style="font-size: 1.2rem; padding: 1rem 2.5rem;">
+            Learn More
+        </a>
+    </div>
+</div>
+
+<div id="features" class="d-flex gap-3 mt-4" style="flex-wrap: wrap;">
+    <div class="card text-center" style="flex: 1; min-width: 250px;">
+        <i class="fa-solid fa-wand-magic-sparkles" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+        <h3 class="card-title">Auto Preprocessing</h3>
+        <p style="color: var(--text-muted);">Automatically clean data, handle missing values, and encode categorical variables.</p>
+    </div>
+    <div class="card text-center" style="flex: 1; min-width: 250px;">
+        <i class="fa-solid fa-brain" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+        <h3 class="card-title">Multi-Model Training</h3>
+        <p style="color: var(--text-muted);">Train Logistic Regression, Decision Trees, and Random Forests simultaneously.</p>
+    </div>
+    <div class="card text-center" style="flex: 1; min-width: 250px;">
+        <i class="fa-solid fa-chart-line" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+        <h3 class="card-title">Interactive Dashboard</h3>
+        <p style="color: var(--text-muted);">Visualize model performance and feature importance with interactive charts.</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Preprocessing{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2 class="card-title"><i class="fa-solid fa-filter"></i> Data Preprocessing</h2>
+    <p style="color: var(--text-muted);">Dataset loaded successfully. Shape: <strong>{{ rows }} rows, {{ cols }} columns</strong></p>
+    
+    <div class="alert alert-success mt-3">
+        <i class="fa-solid fa-circle-check mt-1"></i>
+        <div>
+            <strong>Automatic Cleaning Applied:</strong>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--success);">
+                <li>Removed duplicate rows</li>
+                <li>Filled missing numerical values with column mean</li>
+                <li>Filled missing categorical values with column mode</li>
+                <li>Encoded categorical columns into numerical values</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3 class="card-title mt-4" style="font-size: 1.1rem;">Cleaned Data Preview (Top 5 rows)</h3>
+    <div class="table-responsive">
+        {{ table_html | safe }}
+    </div>
+
+    <hr style="border-color: var(--border-color); margin: 2rem 0;">
+
+    <div style="max-width: 500px;">
+        <h3 class="card-title" style="font-size: 1.1rem;">Select Target Column</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Choose the column you want to predict (e.g., 'Churn').</p>
+        
+        <form action="{{ url_for('train') }}" method="post" id="trainForm">
+            <div class="form-group">
+                <select name="target_col" class="form-select" required>
+                    <option value="" disabled selected>Select Target Column</option>
+                    {% for col in columns %}
+                        <option value="{{ col }}">{{ col }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="document.getElementById('trainSpinner').style.display='inline-block'">
+                <i class="fa-solid fa-brain"></i> Train Models <span id="trainSpinner" class="spinner" style="margin-left: 8px; width: 16px; height: 16px; vertical-align: middle; border-width: 2px;"></span>
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

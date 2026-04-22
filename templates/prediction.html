@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Prediction{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 800px; margin: 0 auto; margin-top: 1rem;">
+    <h2 class="card-title text-center"><i class="fa-solid fa-wand-magic-sparkles"></i> Predict Churn</h2>
+    <p class="text-center text-muted mb-4" style="color: var(--text-muted);">Enter new customer details to predict if they will churn.</p>
+
+    {% if prediction %}
+        <div class="prediction-{{ prediction | lower }}" style="text-align: center; margin-bottom: 2rem; padding: 2rem; border-radius: 12px;">
+            <h3 style="margin-bottom: 0.5rem;">
+                <i class="fa-solid {{ 'fa-face-smile' if prediction == 'Stay' else 'fa-face-frown' }}" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                Likely to {{ prediction }}
+            </h3>
+            <p style="font-size: 1.25rem; margin: 0;">Confidence: <strong>{{ "%.2f"|format(probability * 100) }}%</strong></p>
+        </div>
+    {% endif %}
+
+    <form action="{{ url_for('predict') }}" method="post" id="predictForm">
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+            {% for col in features %}
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">{{ col }}</label>
+                <input type="text" name="{{ col }}" class="form-control" required placeholder="Enter {{ col }}">
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="mt-4 text-center">
+            <button type="submit" class="btn btn-primary" style="width: 100%; max-width: 300px; font-size: 1.1rem; padding: 1rem;" onclick="document.getElementById('predictSpinner').style.display='inline-block'">
+                Predict <span id="predictSpinner" class="spinner" style="margin-left: 8px; width: 18px; height: 18px; vertical-align: middle; border-width: 2px;"></span>
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

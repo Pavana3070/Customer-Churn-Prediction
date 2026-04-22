@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Churn Predictor | {% block title %}{% endblock %}</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fa-solid fa-chart-line"></i> ChurnAI</h2>
+        </div>
+        <ul class="nav-links">
+            <li class="nav-item">
+                <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
+                    <i class="fa-solid fa-home"></i> Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('upload') }}" class="nav-link {% if request.endpoint == 'upload' %}active{% endif %}">
+                    <i class="fa-solid fa-upload"></i> Upload Dataset
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('preprocess') }}" class="nav-link {% if request.endpoint == 'preprocess' %}active{% endif %}">
+                    <i class="fa-solid fa-filter"></i> Preprocessing
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('train') }}" class="nav-link {% if request.endpoint == 'train' %}active{% endif %}">
+                    <i class="fa-solid fa-brain"></i> Train Models
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('dashboard') }}" class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                    <i class="fa-solid fa-chart-pie"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('predict') }}" class="nav-link {% if request.endpoint == 'predict' %}active{% endif %}">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Predict
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-wrapper">
+        <header class="topbar">
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Dark Mode">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </header>
+
+        <main class="content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                      <i class="fa-solid {% if category == 'error' %}fa-circle-exclamation{% else %}fa-circle-check{% endif %} mt-1"></i>
+                      <span>{{ message }}</span>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
