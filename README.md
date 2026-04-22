@@ -4,7 +4,7 @@ A complete, professional Machine Learning Web Application designed to predict cu
 
 ## 🔗 Live Demo
 
-[Check out the Live Demo Here!](https://#) *(Replace this `#` with your actual deployment link once hosted)*
+[Check out the Live Demo Here!](https://customer-churn-prediction-r3xg.onrender.com)
 
 ## 🌟 Features
 
