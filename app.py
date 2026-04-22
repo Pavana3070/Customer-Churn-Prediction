@@ -154,11 +154,11 @@ def train():
     joblib.dump(scaler, os.path.join(app.config['MODEL_FOLDER'], 'scaler.pkl'))
     session['feature_cols'] = X.columns.tolist()
     
-    # Initialize models
+    # Initialize models (optimized for low-memory environments like Render free tier)
     models = {
-        'Logistic Regression': LogisticRegression(max_iter=1000, random_state=42),
-        'Decision Tree': DecisionTreeClassifier(random_state=42),
-        'Random Forest': RandomForestClassifier(random_state=42)
+        'Logistic Regression': LogisticRegression(max_iter=500, random_state=42),
+        'Decision Tree': DecisionTreeClassifier(max_depth=10, random_state=42),
+        'Random Forest': RandomForestClassifier(n_estimators=50, max_depth=10, random_state=42)
     }
     
     results = {}
