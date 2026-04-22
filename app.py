@@ -132,6 +132,10 @@ def train():
         
     df = pd.read_csv(filepath)
     
+    # Render Free Tier Safety: Limit dataset size to prevent Out-Of-Memory crashes
+    if len(df) > 1500:
+        df = df.sample(n=1500, random_state=42)
+    
     if target_col not in df.columns:
         flash(f'Column {target_col} not found in dataset.', 'error')
         return redirect(url_for('preprocess'))
