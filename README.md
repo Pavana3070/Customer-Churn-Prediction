@@ -2,6 +2,10 @@
 
 A complete, professional Machine Learning Web Application designed to predict customer churn. Users can upload their own CSV datasets, automatically preprocess the data, train multiple machine learning models, and use an interactive dashboard to evaluate results and make new predictions.
 
+## 🔗 Live Demo
+
+[Check out the Live Demo Here!](https://#) *(Replace this `#` with your actual deployment link once hosted)*
+
 ## 🌟 Features
 
 - **Upload Dataset**: Simple drag-and-drop interface for CSV files.
